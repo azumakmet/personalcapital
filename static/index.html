@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+  </head>
+  <body ng-controller="ctrl">
+
+Enter Search text:
+<input ng-model="searchText">
+<table>
+	<tr ng-repeat="finst in finsts | startFrom:(currentPage-1)*pageSize | filter:searchText| limitTo:pageSize">
+		<td ng-repeat="(index, value) in finst">{{value}}</td>
+	</tr>
+</table>
+
+    <button ng-disabled="currentPage <= 1" ng-click="currentPage=currentPage-1">
+        Previous
+    </button>
+    {{currentPage}}/{{numberOfPages}}
+    <button ng-disabled="currentPage >= numberOfPages" ng-click="currentPage=currentPage+1">
+        Next
+    </button>
+    <br/>
+    Enter Page number:<input ng-model="enterPage" ng-value="currentPage" size="2">
+    <button ng-click="changePage()">
+        Go
+    </button>
+
+  
+  </body>
+
+  <script>
+  var app = angular.module("app", []);
+
+  app.controller("ctrl", ['$scope', '$http', function($scope, $http){
+
+    $scope.currentPage = 1;
+    $scope.pageSize = 10;
+    
+    // to get list of financial institutions
+    $http.get("url").then(function(response){
+      $scope.finsts = [];
+      $scope.finsts = response.data;
+      $scope.numberOfPages = Math.ceil($scope.finsts.length/$scope.pageSize);
+    });
+
+  // For chaninging the page
+    $scope.changePage = function()
+    {
+      if ($scope.enterPage == parseInt($scope.enterPage, 10) && parseInt($scope.enterPage, 10) > 0 && parseInt($scope.enterPage, 10) <= $scope.numberOfPages)
+      {
+        $scope.currentPage = $scope.enterPage;
+      }
+    }
+    
+    
+  }])
+
+// filter for changing pages
+  app.filter('startFrom', function() {
+    return function(input, start) {
+      if (!input || !input.length) { return; }
+        start = +start; //parse to int
+        return input.slice(start);
+    }
+  });
+
+  </script>
+
+</html>

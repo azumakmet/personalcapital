@@ -1,0 +1,6 @@
+{
+	"name": "ebay",
+	"dependencies": {
+		"express": "*"
+	}
+}
