@@ -1,4 +1,4 @@
-# personalcapital
+# Personal Capital
 Assignment for the interview
 
 
