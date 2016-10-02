@@ -11,7 +11,7 @@ Install node_modules mentioned in package.json:
 $ npm install express
 ```
 
-# Quick Start
+## Quick Start
 
   Open terminal on project level and start the server:
 
