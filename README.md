@@ -8,7 +8,7 @@ Install nodejs from nodejs.org
 
 Install node_modules mentioned in package.json:
 ```bash
-$ npm install express
+$ npm install
 ```
 
 ## Quick Start
